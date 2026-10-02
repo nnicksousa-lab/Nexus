@@ -1,0 +1,5 @@
+import {views} from "./modules/templates.js";import {bindForms} from "./modules/forms.js";
+const app=document.querySelector("#app"),nav=document.querySelector("#main-nav"),toggle=document.querySelector(".menu-toggle");
+function route(){const key=location.hash.replace("#/","")||"home";const view=views[key]||views.home;app.innerHTML=view();document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("active",a.getAttribute("href")===location.hash||(key==="home"&&a.getAttribute("href")==="#/")));nav.classList.remove("open");toggle.setAttribute("aria-expanded","false");bindForms();app.focus();window.scrollTo({top:0,behavior:"smooth"})}
+toggle.addEventListener("click",()=>{const open=nav.classList.toggle("open");toggle.setAttribute("aria-expanded",String(open));toggle.setAttribute("aria-label",open?"Fechar menu":"Abrir menu")});
+window.addEventListener("hashchange",route);if(!location.hash)history.replaceState(null,"","#/");route();
